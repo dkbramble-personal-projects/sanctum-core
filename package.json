@@ -1,6 +1,6 @@
 {
   "name": "@dkbramble-personal-projects/sanctum-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "APIs for Sanctum UIs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
