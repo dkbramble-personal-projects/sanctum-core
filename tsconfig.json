@@ -6,9 +6,8 @@
     "outDir": "./lib",
     "strict": true,
     "lib": [ "es2015", "DOM"],
-    "types": [
-      "node"
-    ],
+    "types": [ "node" ],
+    "typeRoots": [ "../node_modules/@types" ]
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]
