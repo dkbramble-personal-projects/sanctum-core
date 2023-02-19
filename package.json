@@ -1,5 +1,5 @@
 {
-  "name": "sanctum-core",
+  "name": "@dkbramble-personal-projects/sanctum-core",
   "version": "1.0.0",
   "description": "APIs for Sanctum UIs",
   "main": "lib/index.js",
