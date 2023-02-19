@@ -1,12 +1,10 @@
 import { Release, Releases } from "./models";
 
-require('dotenv').config()
 
-
-export const GetReleases = (): string | undefined => {
+export const GetReleases = (clientID: string, clientSecret: string): string | undefined => {
     // const { data } = await fetch(url)
     // return data
-    return process.env.IGDB_CLIENT_ID
+    return clientID
 }
 
 
