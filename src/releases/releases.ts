@@ -1,11 +1,30 @@
 import { Release, Releases } from "./models";
+// import { HLTBService } from '../hltb/usersHttp';
+
+// let search = new HLTBService();
 
 
 export const GetReleases = (clientID: string, clientSecret: string): string | undefined => {
     // const { data } = await fetch(url)
     // return data
+    console.log(clientID)
     return clientID
 }
+
+// export const Test = async (): Promise<void>=>  {
+//     const result = await hltbService.search('Nioh');
+//     return console.log(result);
+// }
+
+// export const Test2 = async (): Promise<void>=>  {
+//     //can include abort signal
+//     let result = await search.getUserLists(386036, ["playing"]);
+//     return console.log(result);
+// }
+
+// Test();
+
+// Test2();
 
 
 // function getUsers(): Promise<Release[]> {
