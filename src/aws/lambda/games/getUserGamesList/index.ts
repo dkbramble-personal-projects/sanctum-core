@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { GetList } from "../../../../hltb/service"
 import { GetAWSSecret } from '../../../secrets/service';
 
-const secret_name = 'dev/HLTB_USER_ID';
+const secret_name = 'dev/HLTB_USER_SECRETS';
 
 export const handler = async (event: APIGatewayProxyEventV2, _context: Context): Promise<APIGatewayProxyResult> => {
     if (event?.queryStringParameters?.listType){
