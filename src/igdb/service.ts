@@ -2,6 +2,8 @@ import { GetAWSSecret } from "../aws/secrets/service"
 import { Release } from "../releases";
 import { AuthTokenResponse, CondensedGameResponse, GamesResponse } from "./models";
 import _ from 'lodash';
+import fetch from "node-fetch";
+
 
 const secret_name = "dev/IGDB_API_SECRETS";
 
@@ -55,7 +57,8 @@ const getIGDBAuthToken = async (clientID: string, clientSecret: string): Promise
     });
 
     if (response.ok){
-        const auth : AuthTokenResponse = await response.json();
+        const res = (await response.json()) as any;
+        const auth : AuthTokenResponse = res;
         return auth.access_token;
     } else {
         throw new Error('Failed to get auth token for IGDB');
@@ -81,7 +84,8 @@ const getIGDBReleaseDates = async (releases: Release[], authToken: string, clien
     });
 
     if (response.ok){
-        const auth : GamesResponse[] = await response.json();
+        const res = (await response.json()) as any;
+        const auth : GamesResponse[] = res;
 
         return auth;
     } else {

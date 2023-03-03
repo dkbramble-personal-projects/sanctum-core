@@ -40,7 +40,7 @@ export const handler = async (_event: APIGatewayProxyEventV2, _context: Context)
     } catch(ex : any){
         return {
             statusCode: 500,
-            body: "Unable to Get New Releases",
+            body: ex.message,
         };
     }
 }
