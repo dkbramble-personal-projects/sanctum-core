@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "es2020",
+    "module":"commonjs",
+    "moduleResolution":"node",
+    "preserveConstEnums": true,
+    "sourceMap": false,
     "declaration": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "outDir": "./lib",
+    "forceConsistentCasingInFileNames": true, 
+    "skipLibCheck": true,
     "strict": true,
     "lib": [ "es2015", "DOM"],
     "types": [ "node" ],

@@ -1,9 +1,10 @@
 
 export interface Release {
-    title?: string;
+    id?: string,
+    name?: string;
     type?: string;
-    releaseDate?: number;
-    checkDate?: number;
+    releaseDate?: number | null;
+    checkDate?: boolean;
 }
 
 export interface Releases {

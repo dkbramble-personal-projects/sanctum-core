@@ -1,13 +1,10 @@
 import { HLTBResult } from "./models";
+import axios from 'axios';
 
-const axios: any = require('axios');
+  export const BASE_URL: string = 'https://howlongtobeat.com/';
+  export const IMAGE_URL: string = `${BASE_URL}games/`;
 
-export class HLTBUsers {
-  public static BASE_URL: string = 'https://howlongtobeat.com/';
-  public static IMAGE_URL: string = `${HLTBUsers.BASE_URL}games/`;
-
-  payload2: any = {
-    "user_id":386036,
+  const payload: any = {
     "lists":[
       
     ],
@@ -23,18 +20,18 @@ export class HLTBUsers {
     "currentUserHome":false
   }
 
-  getUserUrl(userId: number): string {
-    return `${HLTBUsers.BASE_URL}api/user/${userId}/games/list`
+  function getUserUrl(userId: number): string {
+    return `${BASE_URL}api/user/${userId}/games/list`
   }
 
-  async getUserLists(userId: number, lists: string[], signal?: AbortSignal): Promise<HLTBResult | undefined> {
-    let listRequest = { ...this.payload2 };
+  export const GetUserLists = async (userId: number, lists: string[], signal?: AbortSignal): Promise<HLTBResult | undefined> => {
+    let listRequest = { ...payload };
     listRequest.lists = lists;
     listRequest.user_id = userId
 
     try {
       let result =
-        await axios.post(this.getUserUrl(userId), listRequest, {
+        await axios.post(getUserUrl(userId), listRequest, {
           headers: {
             'content-type': 'application/json',
             'origin': 'https://howlongtobeat.com/',
@@ -44,7 +41,6 @@ export class HLTBUsers {
           signal,
         });
 
-        // console.log(result.data)
       return result.data;
     } catch (error : any) {
       if (error) {
@@ -56,4 +52,5 @@ export class HLTBUsers {
       }
     }
   }
-}
+
+
