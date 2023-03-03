@@ -21,7 +21,7 @@ export const handler = async (event: APIGatewayProxyEventV2, _context: Context):
     } catch(ex : any){
         return {
             statusCode: 500,
-            body: "Unable to Delete Release",
+            body: ex.message,
         };
     }
 }

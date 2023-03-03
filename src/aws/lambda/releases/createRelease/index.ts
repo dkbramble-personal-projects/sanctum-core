@@ -32,7 +32,7 @@ export const handler = async (event: APIGatewayProxyEventV2, _context: Context):
     } catch(ex : any){
         return {
             statusCode: 500,
-            body: "Unable to Create New Release",
+            body: ex.message,
         };
     }
 }
