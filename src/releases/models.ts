@@ -5,6 +5,7 @@ export interface Release {
     type?: string;
     releaseDate?: number | null;
     checkDate?: boolean;
+    imageId?: string | null
 }
 
 export interface Releases {

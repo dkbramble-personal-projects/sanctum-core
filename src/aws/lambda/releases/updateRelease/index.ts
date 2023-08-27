@@ -13,8 +13,9 @@ export const handler = async (event: APIGatewayProxyEventV2, _context: Context):
             releaseToUpdate.id = id;
 
             if (releaseToUpdate.checkDate && releaseToUpdate.name) {
-                var releaseDate = await GetReleaseDate(releaseToUpdate);
-                releaseToUpdate.releaseDate = releaseDate ? releaseDate[releaseToUpdate.name] : null;
+                var releaseDate = await GetReleaseDate(releaseToUpdate, releaseToUpdate.checkDate);
+                releaseToUpdate.releaseDate = releaseDate ? releaseDate[releaseToUpdate.name].releaseDate : null;
+                releaseToUpdate.imageId = releaseDate ? releaseDate[releaseToUpdate.name].image_id : null;
             }
 
             await PatchRelease(releaseToUpdate);

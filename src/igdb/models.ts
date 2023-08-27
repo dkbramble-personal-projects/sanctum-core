@@ -10,6 +10,15 @@ export interface GamesResponse {
     name: string
 }
 
+export interface GameCoverResponse {
+    id: number,
+    game: number;
+    image_id: string;
+}
+
 export interface CondensedGameResponse {
-    [name: string]: number
+    [name: string]: {
+        releaseDate: number | null | undefined,
+        image_id: string | null | undefined
+    }
 }

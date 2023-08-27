@@ -11,8 +11,12 @@ export const handler = async (event: APIGatewayProxyEventV2, _context: Context):
             let releaseToCreate: Release = JSON.parse(event.body);
 
             if (releaseToCreate.checkDate && releaseToCreate.name) {
-                var releaseDate = await GetReleaseDate(releaseToCreate);
-                releaseToCreate.releaseDate = releaseDate ? releaseDate[releaseToCreate.name] : null;
+                var releaseData = await GetReleaseDate(releaseToCreate, releaseToCreate.checkDate);
+
+                if (releaseData && releaseData[releaseToCreate.name]) {
+                    releaseToCreate.releaseDate = releaseData[releaseToCreate.name]?.releaseDate;
+                    releaseToCreate.imageId = releaseData[releaseToCreate.name].image_id;
+                }
             }
 
             await PutRelease(releaseToCreate);

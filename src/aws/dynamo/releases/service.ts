@@ -84,7 +84,8 @@ export const PutRelease = async (newRelease: Release): Promise<Release>  => {
         name: newRelease.name,
         type: newRelease.type,
         releaseDate: newRelease.releaseDate,
-        checkDate: newRelease.checkDate
+        checkDate: newRelease.checkDate,
+        imageId: newRelease.imageId
       },
     })
   );
@@ -98,16 +99,18 @@ export const PatchRelease = async (updatedRelease: Release): Promise<Release>  =
     Key: {
       id: updatedRelease.id,
     },
-    UpdateExpression: "set #release_name = :n, #release_type = :t, releaseDate = :r, checkDate = :c",
+    UpdateExpression: "set #release_name = :n, #release_type = :t, releaseDate = :r, checkDate = :c, #image_id = :d",
     ExpressionAttributeValues: {
       ":n": updatedRelease.name,
       ":t": updatedRelease.type,
       ":r": updatedRelease.releaseDate,
-      ":c": updatedRelease.checkDate
+      ":c": updatedRelease.checkDate,
+      ":d": updatedRelease.imageId
     },
     ExpressionAttributeNames: {
       "#release_name": "name",
-      "#release_type": "type"
+      "#release_type": "type",
+      "#image_id": "imageId"
     }
   };
 
@@ -117,57 +120,3 @@ export const PatchRelease = async (updatedRelease: Release): Promise<Release>  =
 
   return updatedRelease;
 }
-
-// export const DynamoHandler = async (event: APIGatewayProxyEventV2, context: Context) => {
-//   let body;
-//   let statusCode = 200;
-//   const headers = {
-//     "Content-Type": "application/json",
-//   };
-
-// //   const cognitoId = context.identity?.cognitoIdentityId
-
-//   try {
-//     switch (event.routeKey) {
-//       case "DELETE /releases/{id}":
-//         body = DeleteRelease(event.pathParameters?.id);
-//         break;
-//       case "GET /releases/{id}":
-//         body = GetRelease(event.pathParameters?.id);
-//         break;
-//       case "GET /releases":
-//         var filterByCheckDate : boolean = event?.queryStringParameters?.filterByCheckDate == "true"
-//         body = GetReleases( filterByCheckDate);
-//         break;
-//       case "PUT /releases":
-//         if (event?.body){
-//             let newRelease: Release = JSON.parse(event?.body);
-//             body = PutRelease(newRelease);
-//             break;
-//         } else {
-//             throw new Error(`No body provied for new release: "${event.routeKey}"`);
-//         }
-//       case "PATCH /releases/{id}":
-//         if (event?.body){
-//             let newRelease: Release = JSON.parse(event?.body);
-//             body = PutRelease(newRelease);
-//             break;
-//         } else {
-//             throw new Error(`No body provied for updated release: "${event.routeKey}"`);
-//         }
-//       default:
-//         throw new Error(`Unsupported route: "${event.routeKey}"`);
-//     }
-//   } catch (err: any) {
-//     statusCode = 400;
-//     body = err.message;
-//   } finally {
-//     body = JSON.stringify(body);
-//   }
-
-//   return {
-//     statusCode,
-//     body,
-//     headers,
-//   };
-// };

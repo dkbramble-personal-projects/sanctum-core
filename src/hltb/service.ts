@@ -11,7 +11,7 @@ export const GetList = async (userId: number, lists: string[], signal?: AbortSig
     let hltbGames = new Array<Game>();
 
     if (result && result.data) {
-        for (const game of result.data.gamesList){
+        for (const game of result.data.gamesList) {
             hltbGames.push(
                 new Game(
                     game.id,
@@ -20,7 +20,8 @@ export const GetList = async (userId: number, lists: string[], signal?: AbortSig
                     game.platform,
                     `${IMAGE_URL}${game.game_image}`,
                     game.game_id,
-                    game.game_type 
+                    game.game_type,
+                    game.comp_all
                 )
             )
         }

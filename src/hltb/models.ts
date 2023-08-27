@@ -6,10 +6,11 @@ export interface HLTBGame {
     readonly game_image: string;
     readonly game_id: number;
     readonly game_type: string;
+    readonly comp_all: number
 }
 
 export interface HLTBResult {
-    readonly data : {
+    readonly data: {
         readonly gamesList: Array<HLTBGame>;
     }
 }
@@ -23,5 +24,6 @@ export class Game {
         public readonly game_image: string,
         public readonly game_id: number,
         public readonly game_type: string,
-    ){}
+        public readonly comp_all: number,
+    ) { }
 }

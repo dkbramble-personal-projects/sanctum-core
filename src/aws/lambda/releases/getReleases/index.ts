@@ -10,37 +10,50 @@ export const handler = async (_event: APIGatewayProxyEventV2, _context: Context)
     try {
         let result: Release[] = [];
         let dynamoReleases = await GetReleases(false);
+        let dynamoCheckDate = _.groupBy(dynamoReleases, 'type');
 
-        let dynamoCheckDate = _.groupBy(dynamoReleases, 'checkDate');
+        dynamoCheckDate['Game'] = await RefreshReleases(dynamoCheckDate['Game'] ?? []);
+        dynamoCheckDate['DLC'] = await RefreshReleases(dynamoCheckDate['DLC'] ?? []);
 
-        let dynamoReleasesToCheck = dynamoCheckDate.true ?? [];
 
-        if (dynamoReleasesToCheck && dynamoReleasesToCheck.length > 0){
-            let igdbReleases = await GetReleaseDates(dynamoReleasesToCheck);
-    
-            if (igdbReleases){
-                for (var release of dynamoReleasesToCheck){
-                    if (release.name && release.releaseDate != igdbReleases[release.name]) {
-                        release.releaseDate = igdbReleases[release.name] ?? null;
-    
-                        await PatchRelease(release);
-                    }
-                }
-            }
-        }
-
-        result = dynamoReleasesToCheck.concat(dynamoCheckDate.false ?? []);
+        result = _.flatMap(dynamoCheckDate)
 
         return {
             statusCode: StatusCodes.OK,
             body: JSON.stringify({
-                "releases": _.sortBy(result, 'releaseDate')
+                "releases": _.sortBy(result, (result => result?.releaseDate))
             }),
         };
-    } catch(ex : any){
+    } catch (ex: any) {
         return {
             statusCode: 500,
-            body: ex.message,
+            body: ex?.message,
         };
     }
+}
+
+async function RefreshReleases(releases: Release[]): Promise<Release[]> {
+    if (releases && releases.length > 0) {
+        let igdbReleases = await GetReleaseDates(releases);
+
+        if (igdbReleases) {
+            for (var release of releases) {
+                if (release.name && release.checkDate) {
+                    var releaseResult = igdbReleases[release.name];
+
+                    if (releaseResult) {
+                        if (release.releaseDate != releaseResult.releaseDate || release.imageId != releaseResult.image_id) {
+                            release.releaseDate = releaseResult.releaseDate ?? null;
+                            release.imageId = releaseResult.image_id ?? null;
+
+                            await PatchRelease(release);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    return releases;
 }
